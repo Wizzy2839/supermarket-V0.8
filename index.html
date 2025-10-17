@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - WizzyMart Online Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <header class="bg-white sticky top-0 z-40 border-b border-slate-200">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold text-teal-600">WizzyMart</h1>
+            <div class="relative">
+                <i class="fas fa-shopping-cart text-slate-500 text-2xl"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-teal-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6 md:p-10 flex-grow">
+        <div id="loader" class="text-center py-10">
+            <i class="fas fa-spinner fa-spin text-4xl text-teal-500"></i>
+            <p class="mt-2 text-slate-500">Memuat produk...</p>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            </div>
+
+        <div id="error-message" class="hidden text-center bg-red-100 text-red-800 p-4 rounded-lg">
+            <p>Gagal memuat produk. Silakan coba lagi nanti.</p>
+        </div>
+    </main>
+
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto flex flex-col">
+            <div class="p-6 md:p-8 flex-grow">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="w-full">
+                        <img id="modal-image" src="https://placehold.co/400x400" alt="Product Image" class="w-full h-auto object-contain rounded-lg max-h-96">
+                    </div>
+                    <div class="flex flex-col h-full">
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-center">
+                               <span id="modal-category" class="text-xs bg-teal-100 text-teal-800 px-3 py-1 rounded-full font-medium capitalize">Kategori</span>
+                               <button id="closeModalBtn" class="text-slate-400 hover:text-slate-600 transition-colors">
+                                    <i class="fas fa-times fa-lg"></i>
+                               </button>
+                            </div>
+                            <h4 class="text-2xl font-bold text-slate-900 mt-3 mb-2" id="modal-product-name">Nama Produk</h4>
+                            <p class="text-3xl font-light text-teal-600 mb-4" id="modal-price">Rp 0</p>
+                            <p class="text-slate-600 text-sm leading-relaxed" id="modal-description">Deskripsi produk akan muncul di sini.</p>
+                        </div>
+                        <button id="modal-add-to-cart" class="mt-6 w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                            <i class="fas fa-cart-plus"></i>
+                            <span>Tambah ke Keranjang</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+    <footer class="bg-white border-t border-slate-200 mt-16">
+        <div class="container mx-auto px-6 md:px-10 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-base font-semibold text-teal-600 mb-3">WizzyMart</h3>
+                    <p class="text-slate-500 text-sm">
+                        Toko online modern yang menyediakan produk berkualitas tinggi untuk kebutuhan Anda.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-slate-800 mb-3">Kontak Kami</h3>
+                    <ul class="text-slate-500 space-y-2 text-sm">
+                        <li class="flex items-center hover:text-teal-600 transition-colors">
+                            <i class="fas fa-envelope mr-3 w-4 text-center"></i>
+                            <a href="mailto:support@tokoku.com">support@wizzymart.com</a>
+                        </li>
+                        <li class="flex items-center hover:text-teal-600 transition-colors">
+                            <i class="fas fa-phone mr-3 w-4 text-center"></i>
+                            <a href="tel:+62311234567">(031) 123-4567</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-slate-800 mb-3">Alamat & Peta</h3>
+                    <p class="text-slate-500 text-sm mb-3">
+                        Jl. Basuki Rahmat No.8-12, Surabaya
+                    </p>
+                    <div class="overflow-hidden rounded-lg border border-slate-200">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.882190001815!2d112.7383748747494!3d-7.25459349275147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f9431c385cbf%3A0xa65001a19b6736fb!2sJl.%20Basuki%20Rahmat%20No.8-12%2C%20Kedungdoro%2C%20Kec.%20Tegalsari%2C%20Surabaya%2C%20Jawa%20Timur%2060261!5e0!3m2!1sen!2sid!4v1729141581404!5m2!1sen!2sid"
+                            width="100%"
+                            height="120"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-200 mt-8 pt-4 text-center text-slate-500">
+                <p class="text-xs">© 2025 WizzyMart. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
